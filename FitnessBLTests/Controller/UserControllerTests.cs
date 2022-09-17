@@ -10,7 +10,23 @@ namespace FitnessBL.Controller.Tests
         [TestMethod()]
         public void SetNewUserDataTest()
         {
-            Assert.Fail();
+            //arange
+            var userName = Guid.NewGuid().ToString();
+            var birthdate = DateTime.Now.AddYears(-18);
+            var weight = 90;
+            var height = 190;
+            var gender = "man";
+            var conroller = new UserController(userName);
+            //act
+            conroller.SetNewUserData(gender, birthdate, weight, height);
+            var conroller2 = new UserController(userName);
+            //assert
+            Assert.AreEqual(userName, conroller2.CurrentUser.Name);
+            Assert.AreEqual(birthdate, conroller2.CurrentUser.BirthDay);
+            Assert.AreEqual(weight, conroller2.CurrentUser.Weight);
+            Assert.AreEqual(height, conroller2.CurrentUser.Height);
+            Assert.AreEqual(gender, conroller2.CurrentUser.Gender.Name);
+
         }
 
         [TestMethod()]
