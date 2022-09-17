@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FitnessBL.Model
+﻿namespace FitnessBL.Model
 {
     /// <summary>
     /// пол
@@ -13,9 +7,9 @@ namespace FitnessBL.Model
     [Serializable]
     public class Gender
     {
-       /// <summary>
-       /// Название
-       /// </summary>
+        /// <summary>
+        /// Название
+        /// </summary>
         public string Name { get; }
         /// <summary>
         /// Создать новый пол

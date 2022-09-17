@@ -1,10 +1,5 @@
 ﻿using FitnessBL.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FitnessBL.Controller
 {
@@ -33,14 +28,14 @@ namespace FitnessBL.Controller
             Users = GetUsersData();
             CurrentUser = Users.SingleOrDefault(u => u.Name == userName);
 
-            if(CurrentUser == null)
+            if (CurrentUser == null)
             {
                 CurrentUser = new User(userName);
                 Users.Add(CurrentUser);
                 IsNewUser = true;
                 Save();
             }
-            
+
         }
         /// <summary>
         /// Получить сохраненный список пользователей
@@ -51,7 +46,7 @@ namespace FitnessBL.Controller
             var formatter = new BinaryFormatter();
             using (var fs = new FileStream("users.dat", FileMode.OpenOrCreate))
             {
-                if (formatter.Deserialize(fs) is List<User> users)
+                if (fs.Length > 0 && formatter.Deserialize(fs) is List<User> users)
                 {
                     return users;
                 }
@@ -80,9 +75,9 @@ namespace FitnessBL.Controller
         {
 
             var formatter = new BinaryFormatter();
-            using(var fs = new FileStream("users.dat", FileMode.OpenOrCreate))
+            using (var fs = new FileStream("users.dat", FileMode.OpenOrCreate))
             {
-                formatter.Serialize(fs,Users);
+                formatter.Serialize(fs, Users);
             }
         }
         /// <summary>
@@ -90,6 +85,6 @@ namespace FitnessBL.Controller
         /// </summary>
         /// <returns></returns>
         /// <exception cref="FileLoadException"></exception>
-        
+
     }
 }

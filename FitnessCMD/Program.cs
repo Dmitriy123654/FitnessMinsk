@@ -1,5 +1,4 @@
 ﻿using FitnessBL.Controller;
-using FitnessBL.Model;
 
 namespace FitnessCMD
 {
@@ -21,7 +20,7 @@ namespace FitnessCMD
                 var birthDate = ParseDateTime();
                 var weight = ParseDouble("вес");
                 var height = ParseDouble("рост");
-          
+
                 userConroller.SetNewUserData(gender, birthDate, weight, height);
             }
         }
