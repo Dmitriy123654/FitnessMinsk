@@ -26,6 +26,7 @@ namespace FitnessCMD
                 userConroller.SetNewUserData(gender, birthDate, weight, height);
             }
             Console.WriteLine(userConroller.CurrentUser);
+
             Console.WriteLine("Что вы хотите сделать?");
             Console.WriteLine("E - ввести приём пищи");
             var key = Console.ReadKey();

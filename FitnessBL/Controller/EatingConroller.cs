@@ -23,8 +23,6 @@ namespace FitnessBL.Controller
             Foods = GetAllFoods();
             Eating = GetEating();
         }
-       
-
         public void Add(Food food,double weight)
         {
             var product = Foods.SingleOrDefault(x => x.Name == food.Name);
@@ -47,7 +45,7 @@ namespace FitnessBL.Controller
 
         private List<Food>? GetAllFoods()
         {
-            return Load<List<Food>?>(FOODS_FILE_NAME) ?? new List<Food>();
+            return Load<List<Food>>(FOODS_FILE_NAME) ?? new List<Food>();
         }
         public void Save()
         {

@@ -15,15 +15,17 @@ namespace FitnessBL.Controller.Tests
         [TestMethod()]
         public void AddTest()
         {
-            //arrange
             var userName = Guid.NewGuid().ToString();
             var foodName = Guid.NewGuid().ToString();
             var rnd = new Random();
-            var userConroller = new UserController(userName);
-            var eatingConroller = new EatingConroller(userConroller.CurrentUser);
-            var food = new Food(foodName, rnd.Next(50, 500), rnd.Next(50, 500), rnd.Next(50, 5000), rnd.Next(50, 500));
+            var userController = new UserController(userName);
+            var eatingConroller = new EatingConroller(userController.CurrentUser);
+            var food = new Food(foodName, rnd.Next(50, 500), rnd.Next(50, 500), rnd.Next(50, 500), rnd.Next(50, 500));
+
+            // Act
             eatingConroller.Add(food, 100);
-            //asser
+
+            // Assert
             Assert.AreEqual(food.Name, eatingConroller.Eating.Foods.First().Key.Name);
         }
     }
