@@ -1,4 +1,5 @@
 ﻿using FitnessBL.Controller;
+using FitnessBL.Model;
 
 namespace FitnessCMD
 {
@@ -12,6 +13,7 @@ namespace FitnessCMD
             var name = Console.ReadLine();
 
             var userConroller = new UserController(name);
+            var eatingConroller = new EatingConroller(userConroller.CurrentUser);
             Console.WriteLine(userConroller.CurrentUser);
             if (userConroller.IsNewUser)
             {
@@ -23,6 +25,39 @@ namespace FitnessCMD
 
                 userConroller.SetNewUserData(gender, birthDate, weight, height);
             }
+            Console.WriteLine(userConroller.CurrentUser);
+            Console.WriteLine("Что вы хотите сделать?");
+            Console.WriteLine("E - ввести приём пищи");
+            var key = Console.ReadKey();
+            Console.WriteLine();
+
+            if(key.Key == ConsoleKey.E)
+            {
+                var foods = EnterEating();
+                eatingConroller.Add(foods.Food, foods.Weight);
+                foreach(var item in eatingConroller.Eating.Foods)
+                {
+                    Console.WriteLine($"\t {item.Key} - {item.Value}");
+                }
+
+            }
+
+        }
+
+        private static (Food Food,double Weight) EnterEating()
+        { 
+            Console.WriteLine("Введите имя продукта: ");
+            var food = Console.ReadLine();
+
+            var calories = ParseDouble("калорийность");
+            var prots = ParseDouble("белки");
+            var fats = ParseDouble("жиры");
+            var carbs = ParseDouble("углеводы");
+
+            var weight = ParseDouble("вес порции");
+            var product = new Food(food,calories,prots,fats,carbs);
+
+            return (Food: product,Weight: weight);
         }
 
         private static DateTime ParseDateTime()
@@ -56,7 +91,7 @@ namespace FitnessCMD
                 }
                 else
                 {
-                    Console.WriteLine($"Неверный формат {name}");
+                    Console.WriteLine($"Неверный формат поля {name}");
                 }
             }
         }
