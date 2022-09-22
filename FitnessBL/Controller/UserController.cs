@@ -8,6 +8,7 @@ namespace FitnessBL.Controller
     /// </summary>
     public class UserController : ConrollerBase
     {
+        public UserController() { }
         private const string USERS_FILE_NAME = "users.dat";
         /// <summary>
         /// Пользователь приложения

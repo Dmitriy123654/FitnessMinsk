@@ -16,6 +16,7 @@ namespace FitnessBL.Model
         public DateTime Moment { get; }
         public Dictionary<Food,double> Foods { get; }//но лучше сделать свой класс
         public User User { get; }
+        public Eating() { }
         public Eating(User user)
         {
             User = user ?? throw new ArgumentNullException("Пользователь не может быть пустым.", nameof(user));
@@ -25,6 +26,7 @@ namespace FitnessBL.Model
         }
         public void Add(Food food,double weiht)
         {
+            //проверка существует ли такая еда
             var product = Foods.Keys.FirstOrDefault(f => f.Name.Equals(food.Name));
             if(product == null)
             {

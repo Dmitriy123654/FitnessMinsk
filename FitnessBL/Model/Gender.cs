@@ -17,7 +17,7 @@
         /// <param name="name">имя поля</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// при наведении мышкой будешь их видеть!!!!!!!!!
-
+        public Gender() { }
         public Gender(string name)
         {
             if (string.IsNullOrWhiteSpace(name))

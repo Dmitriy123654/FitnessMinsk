@@ -10,6 +10,7 @@ namespace FitnessBL.Controller
 {
     public class EatingConroller :  ConrollerBase
     {
+        public EatingConroller() { }
         private const string FOODS_FILE_NAME = "foods.dat";
         private const string EATINGS_FILE_NAME = "eatings.dat";
 
@@ -33,6 +34,7 @@ namespace FitnessBL.Controller
                 Foods.Add(food);
                 Eating.Add(food, weight);
                 Save();
+                
             }
             else
             {

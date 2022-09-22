@@ -7,47 +7,49 @@ namespace FitnessCMD
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Добро пожаловать в тестовое приложение для фитнеса");
+            Console.WriteLine("Вас приветствует приложение CodeBlogFitness");
 
             Console.WriteLine("Введите имя пользователя");
             var name = Console.ReadLine();
 
-            var userConroller = new UserController(name);
-            var eatingConroller = new EatingConroller(userConroller.CurrentUser);
-            Console.WriteLine(userConroller.CurrentUser);
-            if (userConroller.IsNewUser)
+            var userController = new UserController(name);
+            var eatingController = new EatingConroller(userController.CurrentUser);
+            if (userController.IsNewUser)
             {
-                Console.WriteLine("Введите пол: ");
+                Console.Write("Введите пол: ");
                 var gender = Console.ReadLine();
                 var birthDate = ParseDateTime();
                 var weight = ParseDouble("вес");
                 var height = ParseDouble("рост");
 
-                userConroller.SetNewUserData(gender, birthDate, weight, height);
+                userController.SetNewUserData(gender, birthDate, weight, height);
             }
-            Console.WriteLine(userConroller.CurrentUser);
+
+
+            Console.WriteLine(userController.CurrentUser);
 
             Console.WriteLine("Что вы хотите сделать?");
-            Console.WriteLine("E - ввести приём пищи");
+            Console.WriteLine("E - ввести прием пищи");
             var key = Console.ReadKey();
             Console.WriteLine();
 
-            if(key.Key == ConsoleKey.E)
+            if (key.Key == ConsoleKey.E)
             {
                 var foods = EnterEating();
-                eatingConroller.Add(foods.Food, foods.Weight);
-                foreach(var item in eatingConroller.Eating.Foods)
-                {
-                    Console.WriteLine($"\t {item.Key} - {item.Value}");
-                }
+                eatingController.Add(foods.Food, foods.Weight);
 
+                foreach (var item in eatingController.Eating.Foods)
+                {
+                    Console.WriteLine($"\t{item.Key} - {item.Value}");
+                }
             }
 
+            Console.ReadLine();
         }
 
-        private static (Food Food,double Weight) EnterEating()
-        { 
-            Console.WriteLine("Введите имя продукта: ");
+        private static (Food Food, double Weight) EnterEating()
+        {
+            Console.Write("Введите имя продукта: ");
             var food = Console.ReadLine();
 
             var calories = ParseDouble("калорийность");
@@ -56,9 +58,10 @@ namespace FitnessCMD
             var carbs = ParseDouble("углеводы");
 
             var weight = ParseDouble("вес порции");
-            var product = new Food(food,calories,prots,fats,carbs);
+            var product = new Food(food, calories, prots, fats, carbs);
 
-            return (Food: product,Weight: weight);
+
+            return (Food: product, Weight: weight);
         }
 
         private static DateTime ParseDateTime()
@@ -66,7 +69,7 @@ namespace FitnessCMD
             DateTime birthDate;
             while (true)
             {
-                Console.WriteLine("Введите дату рождения (dd.MM.yyyy): ");
+                Console.Write("Введите дату рождения (dd.MM.yyyy): ");
                 if (DateTime.TryParse(Console.ReadLine(), out birthDate))
                 {
                     break;
@@ -80,13 +83,12 @@ namespace FitnessCMD
             return birthDate;
         }
 
-        public static double ParseDouble(string name)
+        private static double ParseDouble(string name)
         {
             while (true)
             {
-                Console.WriteLine($"Введите {name}: ");
-                //var birthDate = Console.ReadLine();
-                if (Double.TryParse(Console.ReadLine(), out double value))
+                Console.Write($"Введите {name}: ");
+                if (double.TryParse(Console.ReadLine(), out double value))
                 {
                     return value;
                 }

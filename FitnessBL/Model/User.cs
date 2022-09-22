@@ -44,11 +44,8 @@
         /// <param name="height">Рост</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public User(string name,
-            Gender gender,
-            DateTime birthday,
-            double weight,
-            double height)
+        public User() { }
+        public User(string name,Gender gender,DateTime birthday,double weight,double height)
         {
             #region Проверка условий
             if (string.IsNullOrWhiteSpace(name))
@@ -59,7 +56,7 @@
             {
                 throw new ArgumentNullException(nameof(gender), "Пол не может быть null.");
             }
-            if (birthday < DateTime.Parse("01.01.1900.") || birthday >= DateTime.Now)
+            if (birthday < DateTime.Parse("01.01.1900") || birthday >= DateTime.Now)
             {
                 throw new ArgumentException("Невозможная дата рождения.", nameof(birthday));
             }
