@@ -1,5 +1,9 @@
 ﻿using FitnessBL.Controller;
 using FitnessBL.Model;
+using FitnessCMD;
+using System.Globalization;
+using System.Resources;
+//using System.Resources;
 
 namespace FitnessCMD
 {
@@ -7,9 +11,15 @@ namespace FitnessCMD
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Вас приветствует приложение CodeBlogFitness");
+            var culture = CultureInfo.CreateSpecificCulture("en-us");
+            var resourceManages = new ResourceManager("FitnessCMD.Languages.Manages",typeof(Program).Assembly);
 
-            Console.WriteLine("Введите имя пользователя");
+            Console.WriteLine(Languages.Manages.Hello);//без resourceManages
+
+            Console.WriteLine(resourceManages.GetString("EnterName",culture));//с ним
+
+            Console.WriteLine(resourceManages.GetString("EnterName", culture));//с ним
+                                                                      //  Console.WriteLine(Langua);
             var name = Console.ReadLine();
 
             var userController = new UserController(name);
