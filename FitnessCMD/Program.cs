@@ -3,6 +3,7 @@ using FitnessBL.Model;
 using FitnessCMD;
 using System.Globalization;
 using System.Resources;
+//using FitnessCMD.Languages;
 //using System.Resources;
 
 namespace FitnessCMD
@@ -11,24 +12,28 @@ namespace FitnessCMD
     {
         static void Main(string[] args)
         {
-            var culture = CultureInfo.CreateSpecificCulture("en-us");
+            var culture2 = CultureInfo.CurrentCulture;//текущая культура пользваотеля
+            var culture = CultureInfo.CreateSpecificCulture("en-us");//пользователь так может изменить культуру
             var resourceManages = new ResourceManager("FitnessCMD.Languages.Manages",typeof(Program).Assembly);
 
             Console.WriteLine(Languages.Manages.Hello);//без resourceManages
 
-            Console.WriteLine(resourceManages.GetString("EnterName",culture));//с ним
+            Console.WriteLine(resourceManages.GetString("EnterName"));//без культуры
 
-            Console.WriteLine(resourceManages.GetString("EnterName", culture));//с ним
+            Console.WriteLine(resourceManages.GetString("EnterName", culture));//с культурой
                                                                       //  Console.WriteLine(Langua);
             var name = Console.ReadLine();
-
+            //YG9NW - 3K39V - 2T3HJ - 93F3Q - G83KT
+            //    PD3PC - RHNGV - FXJ29 - 8JK7D - RJRJK
+            //    XQNVK - 8JYDB - WJ9W3 - YJ8YR - WFG99
             var userController = new UserController(name);
             var eatingController = new EatingConroller(userController.CurrentUser);
+            var workoutController = new WorkoutController(userController.CurrentUser);
             if (userController.IsNewUser)
             {
                 Console.Write("Введите пол: ");
                 var gender = Console.ReadLine();
-                var birthDate = ParseDateTime();
+                var birthDate = ParseDateTime("дата рождения");
                 var weight = ParseDouble("вес");
                 var height = ParseDouble("рост");
 
@@ -38,23 +43,56 @@ namespace FitnessCMD
 
             Console.WriteLine(userController.CurrentUser);
 
-            Console.WriteLine("Что вы хотите сделать?");
-            Console.WriteLine("E - ввести прием пищи");
-            var key = Console.ReadKey();
-            Console.WriteLine();
 
-            if (key.Key == ConsoleKey.E)
+            while (true)
             {
-                var foods = EnterEating();
-                eatingController.Add(foods.Food, foods.Weight);
-
-                foreach (var item in eatingController.Eating.Foods)
+                Console.WriteLine("Что вы хотите сделать?");
+                Console.WriteLine("E - ввести прием пищи");
+                Console.WriteLine("А - ввести упражнение");
+                Console.WriteLine("Q - выход");
+                var key = Console.ReadKey();
+                Console.WriteLine();
+                switch (key.Key)
                 {
-                    Console.WriteLine($"\t{item.Key} - {item.Value}");
+                    case ConsoleKey.E:
+                        var foods = EnterEating();
+                        eatingController.Add(foods.Food, foods.Weight);
+
+                        foreach (var item in eatingController.Eating.Foods)
+                        {
+                            Console.WriteLine($"\t{item.Key} - {item.Value}");
+                        }
+                        break;
+                    case ConsoleKey.A:
+                        var work = EnterWorkout();
+                        workoutController.Add(work.Activity, work.Begin, work.End);
+                        foreach(var item in workoutController.Workouts)
+                        {
+                            Console.WriteLine($"\t{item.Activity} с {item.Start.ToShortTimeString()} до {item.Finish.ToShortTimeString()}");
+                        }
+                            break;
+                    case ConsoleKey.Q:
+                        Environment.Exit(0);
+                        break;
+
                 }
             }
 
+
             Console.ReadLine();
+        }
+
+        private static (DateTime Begin,DateTime End,Activity Activity) EnterWorkout()
+        {
+            Console.WriteLine("Введите название упражнения");
+            var name = Console.ReadLine();
+            var energy = ParseDouble("расход энергии в минуту");
+
+
+            var begin = ParseDateTime("начало упражнения");
+            var end = ParseDateTime("окончание упражнения");
+            var activity = new Activity(name, energy);
+            return (begin, end, activity);
         }
 
         private static (Food Food, double Weight) EnterEating()
@@ -74,19 +112,19 @@ namespace FitnessCMD
             return (Food: product, Weight: weight);
         }
 
-        private static DateTime ParseDateTime()
+        private static DateTime ParseDateTime(string value)
         {
             DateTime birthDate;
             while (true)
             {
-                Console.Write("Введите дату рождения (dd.MM.yyyy): ");
+                Console.Write($"Введите {value} (dd.MM.yyyy): ");
                 if (DateTime.TryParse(Console.ReadLine(), out birthDate))
                 {
                     break;
                 }
                 else
                 {
-                    Console.WriteLine("Неверный формат даты рождения");
+                    Console.WriteLine($"Неверный формат {value}");
                 }
             }
 
