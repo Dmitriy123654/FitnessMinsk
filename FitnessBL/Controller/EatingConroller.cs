@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FitnessBL.Controller
 {
-    public class EatingConroller :  ConrollerBase
+    public class EatingConroller :  ConrollerBase<Eating>
     {
         public EatingConroller() { }
         private const string FOODS_FILE_NAME = "foods.dat";
@@ -45,18 +45,22 @@ namespace FitnessBL.Controller
 
         private Eating GetEating()
         {
-            return Load<Eating>(EATINGS_FILE_NAME) ?? new Eating(user);
+            return Load().First();
+         //   return Load<Eating>(EATINGS_FILE_NAME) ?? new Eating(user);
         }
 
         private List<Food> GetAllFoods()
         {
-            return Load<List<Food>>(FOODS_FILE_NAME) ?? new List<Food>();
+            return Load()
+            //return Load<List<Food>>(FOODS_FILE_NAME) ?? new List<Food>();
         }
 
         private void Save()
         {
-            Save(FOODS_FILE_NAME, Foods);
-            Save(EATINGS_FILE_NAME, Eating);
+            //Save(FOODS_FILE_NAME, Foods);
+            //Save(EATINGS_FILE_NAME, Eating);
+            Save();
+            //Save();
         }
 
     }

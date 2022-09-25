@@ -13,10 +13,12 @@ namespace FitnessBL.Model
     [Serializable]
     public class Eating
     {
+        public int Id { get; set; }
         public DateTime Moment { get; }
-        public Dictionary<Food,double> Foods { get; }//но лучше сделать свой класс
-        public User User { get; }
+        public Dictionary<Food,double> Foods { get; set; }//но лучше сделать свой класс
+        public int UserId { get; set; }
         public Eating() { }
+        public virtual User User { get; set; }
         public Eating(User user)
         {
             User = user ?? throw new ArgumentNullException("Пользователь не может быть пустым.", nameof(user));

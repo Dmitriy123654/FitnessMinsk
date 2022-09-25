@@ -6,7 +6,7 @@ namespace FitnessBL.Controller
     /// <summary>
     /// Контроллер пользователя.
     /// </summary>
-    public class UserController : ConrollerBase
+    public class UserController : ConrollerBase<User>
     {
         public UserController() { }
         private const string USERS_FILE_NAME = "users.dat";
@@ -45,7 +45,7 @@ namespace FitnessBL.Controller
         /// <returns></returns>
         private List<User> GetUsersData()
         {
-            return Load<List<User>>(USERS_FILE_NAME) ?? new List<User>();
+            return load();
             
         }
 
@@ -64,7 +64,7 @@ namespace FitnessBL.Controller
         /// </summary>
         public void Save()
         {
-            Save(USERS_FILE_NAME, Users);
+           // Save(USERS_FILE_NAME, Users);
             
         }
         /// <summary>

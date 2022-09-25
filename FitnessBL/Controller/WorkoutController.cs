@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FitnessBL.Controller
 {
-    public class WorkoutController : ConrollerBase
+    public class WorkoutController : ConrollerBase<Workout>
     {
         private readonly User user;
         private const string WORKOUT_FILE_NAME = "wordouts.dat";
